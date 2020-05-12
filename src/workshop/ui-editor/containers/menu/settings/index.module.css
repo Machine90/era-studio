@@ -1,0 +1,25 @@
+.settings-container {
+  margin-top: calc(5vh);
+}
+
+.addon-container {
+  background-color: gray;
+  position: relative;
+  flex: 1;
+  display: flex;
+  height: 100%;
+}
+
+.pugin-preview-container {
+  display: flex;
+  flex-direction: column;
+  width: 375px;
+  height: 667px;
+  margin: auto;
+  background-color: #666;
+  box-shadow: rgba(0, 0, 0, 0.5) 0 0 30px 0;
+  overflow-y: auto;
+  box-shadow: #666 2px 0px 15px;
+  behavior: url(/PIE.htc);
+  border-radius: 5px;
+}
