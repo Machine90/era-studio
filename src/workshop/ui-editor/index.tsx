@@ -142,6 +142,12 @@ class Workshop extends Component<Props, States> {
         history.push(`/ui-editor/${name}`);
     }
 
+    /**
+     * Left side menu of studio include:
+     * 1. Studio
+     * 2. Layer
+     * 3. Settings
+     */
     private dispatchMenuRender = (): Screen => {
         let menuContent: ReactNode;
         let bodyContent: ReactNode;
@@ -154,7 +160,7 @@ class Workshop extends Component<Props, States> {
                 </Grid>
                 break;
             case 'logic-layer':
-
+                // todo
                 break;
             case 'settings':
                 menuContent = <Settings.MenuBar changePanel={(panel) => {

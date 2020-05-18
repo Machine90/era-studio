@@ -63,6 +63,7 @@ interface StylesProps {
 }
 
 export abstract class StylesEditor extends React.Component<StylesProps, any> {
+    
 }
 
 interface StrategyProps {
