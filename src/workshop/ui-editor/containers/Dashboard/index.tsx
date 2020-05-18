@@ -14,6 +14,7 @@ import { StyleFragments } from '@/core/vendor/protocol';
 
 interface States {
     activeMenu: string | undefined;
+    refresh: boolean;
 }
 
 interface Props {
@@ -36,7 +37,11 @@ class Dashboard extends Component<Props, States> {
 
     constructor(props) {
         super(props);
-        this.state = { activeMenu: 'Unkown' }
+        this.state = { activeMenu: 'Unkown', refresh: false }
+    }
+
+    componentDidUpdate() {
+        console.log("now updating...");
     }
 
     private currentElement = (): PageElement | undefined => {
@@ -53,11 +58,10 @@ class Dashboard extends Component<Props, States> {
         if (!elem) return;
         const originStyle = elem.styles;
         elem.styles = { ...originStyle, ...styles };
-        this.forceUpdate();
-
-        // if (this.props.refreshEvent) {
-        //     this.props.refreshEvent();
-        // }
+        console.log("refreshing darshboard...");
+        if (this.props.refreshEvent) {
+            this.props.refreshEvent();
+        }
     }
 
     private updateElementStrategy = (strategy: object): void => {

@@ -92,7 +92,7 @@ export const refreshEvent = (): AsuraAction => ({
     type: "EVENT_REFRESH_PAGE",
     payload: {
         event: {
-            refresh: false
+            refresh: true
         }
     }
 });

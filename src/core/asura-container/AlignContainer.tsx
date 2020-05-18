@@ -107,6 +107,7 @@ class AlignContainer extends Component<Props, States> {
 
             const isSelected: boolean = pageElement.seq === this.props.focusElementSeq;
             if (choosedPlugin.type === 'sprite') {
+                // render 'sprite' as 'rnd' element.
                 element = <RndComponent
                     choosed={isSelected}
                     key={key}
@@ -149,17 +150,25 @@ class AlignContainer extends Component<Props, States> {
         return elements;
     }
 
+    /**
+     * align line between elements and container.
+     * @param
+     * @returns 
+     * 
+     * @author Xun
+     */
     private renderAlignLines = () => {
+
     }
 
-    public render() {
+    public render(): React.ReactNode {
         const { style, alias } = this.props;
         const Container: any = alias;
         const elements = this.renderChildrenPlugin(this.props.elements, true);
         return (
             <Container style={style} ref={(ref) => this._component = ref}>
                 {this.renderAlignLines()}
-                {this.PositionPopups()}
+                {this.DetailPopups()}
                 {elements}
                 {this.ColorWrapper()}
             </Container>
@@ -194,7 +203,16 @@ class AlignContainer extends Component<Props, States> {
         </Popup>
     }
 
-    private PositionPopups() {
+    /**
+     * Render the popup of element detail which contains:
+     * 1. Element positions: axis X and Y.
+     * 2. Width and height of operated element.
+     * @param
+     * @returns Popup
+     * 
+     * @author Xun
+     */
+    private DetailPopups(): React.ReactNode {
         if (!this.state.position) return;
         const { x, y } = this.state.position;
         const { width, height } = this.state.rect;
@@ -205,10 +223,13 @@ class AlignContainer extends Component<Props, States> {
             padding: '2em',
         }
 
+        // do not hidden the operating element.
         const position = x > 187 ? 'top left' : 'top right';
         const spans: React.ReactNode[] = [];
+        // x, y
         spans.push(<span key={1}>{'x: ' + x.toFixed(3)}<br/></span>);
         spans.push(<span key={2}>{'y: ' + y.toFixed(3)}<br/></span>);
+        // width & height
         if (width) spans.push(<span key={3}>{'w: ' + width}<br/></span>);
         if (height) spans.push(<span key={4}>{'h: ' + height}<br/></span>);
 

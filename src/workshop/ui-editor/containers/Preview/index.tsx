@@ -5,7 +5,7 @@ import { autobind } from 'core-decorators';
 import { Payload } from '@/store/common/Types';
 
 import EmulatorView from './Emulator';
-import { Menu, Icon, Select, Popup, List, Label, Button } from 'semantic-ui-react';
+import { Menu, Icon, Select, Popup, List, Label, Button, Header, Dropdown, Transition } from 'semantic-ui-react';
 import './index.module.css';
 import { renderToString } from 'react-dom/server';
 interface Props {
@@ -13,6 +13,7 @@ interface Props {
 }
 
 interface States {
+    screen: "horizontial" | "vertical"
 }
 
 @connect(
@@ -22,6 +23,13 @@ interface States {
 )
 @autobind
 class Preview extends Component<Props, States> {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            screen: 'vertical'
+        }
+    }
 
     public zoomIn = () => { }
     public zoomOut = () => { }
@@ -37,6 +45,12 @@ class Preview extends Component<Props, States> {
             { key: 'ipad', value: '768:1024', text: 'iPad' },
             { key: 'pc', value: '640:360', text: 'PC' }
         ];
+
+        const align: any[] = [
+            { key: 'vertical', value: 'vertical', text: 'Vertical' },
+            { key: 'horizontial', value: 'horizontial', text: 'Horizontial' }
+        ];
+
         const elements: any[] = [
             <Menu.Item key={-1}><img src='/favicon.ico' /></Menu.Item>
         ];
@@ -51,16 +65,35 @@ class Preview extends Component<Props, States> {
         elements.push(
             <Menu.Item key={headerItems.length}><Select placeholder='Select Device' options={devices} /></Menu.Item>
         );
+        elements.push(
+            <Menu.Item key={headerItems.length + 1}>
+                <Header as='h6' inverted>
+                    <Icon name='repeat' />
+                    <Header.Content>
+                        Screen {' '}
+                        <Dropdown
+                            inline
+                            header="Screen"
+                            options={align}
+                            defaultValue={align[0].value}
+                            onChange={(evt, { value }) => { this.setState({ screen: value === "vertical" ? "vertical" : "horizontial" }) }}
+                        />
+                    </Header.Content>
+                </Header>
+            </Menu.Item>
+        );
         return <Menu inverted>
             {elements}
         </Menu>
     }
 
     public render(): ReactNode {
+        const { screen } = this.state;
+        const containerStyle = screen === 'horizontial' ? 'emulator-container-iphone-horizontal' : 'emulator-container-iphone-vertical';
         return (
             <div>
                 <div>{this.headerBar()}</div>
-                <div className='emulator-container'>
+                <div className={containerStyle}>
                     <EmulatorView />
                 </div>
                 <div style={{ marginTop: '5px' }}>

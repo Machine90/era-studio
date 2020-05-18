@@ -60,7 +60,15 @@ const handlers: AsuraHandler[] = [
             state.delete(element.seq);
             return new Map(state);
         }
-    }
+    },
+    {
+        type: "EVENT_REFRESH_PAGE",
+        handler: (state: Map<string, PageElement>, action: AsuraAction) => {
+            let { event } = action.payload;
+            if (event && event.refresh) return new Map(state);
+            else return state;
+        }
+    },
 ];
 
 const ACTION_HANDLERS: object = processAsuraHandlers(handlers);
