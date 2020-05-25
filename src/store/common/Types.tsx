@@ -3,7 +3,8 @@ import { Action } from 'redux';
 import { PageElement } from '../reducers/page';
 
 export class Event {
-    public refresh: boolean = false;
+    public refresh?: boolean = false;
+    public screenDirection?: "vertical" | "horizontial";
 }
 
 export class Payload {

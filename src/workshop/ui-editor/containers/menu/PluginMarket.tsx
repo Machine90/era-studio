@@ -2,7 +2,7 @@ import React, { Component, ReactNode } from "react";
 import { connect } from 'react-redux';
 import { Project, Plugin } from '@/common/models/Project';
 import { autobind } from 'core-decorators';
-import { GridRow, Grid, Container, Accordion, Card, Icon, Label, Popup, Header, Button, GridColumn } from 'semantic-ui-react';
+import { GridRow, Grid, Container, Accordion, Card, Icon, Label, Popup, Header, Button, GridColumn, Tab } from 'semantic-ui-react';
 import { SearchBox, Detail, Item } from '@/common/components/SearchBox';
 
 import Slider from "react-slick";
@@ -90,10 +90,18 @@ class PluginMarket extends Component<PluginMarketProp, PluginMarketState> {
     }
 
     public render(): ReactNode {
+        const panes = [
+            {
+                menuItem: 'Tab 1',
+                render: () => {this.renderPlugins()},
+            }
+        ];
         return (
             <Grid style={{ marginLeft: '3px', marginTop: '5px', marginRight: '3px' }} divided>
                 <GridRow>{this.renderSearchBar()}</GridRow>
-                <GridRow>{this.renderPlugins()}</GridRow>
+                <GridRow>
+                    {this.renderPlugins()}
+                </GridRow>
             </Grid>
         );
     }
@@ -217,7 +225,7 @@ const selectPluginPopup = (index: number, pluginElement, plugin: Plugin, clickAd
                     <Button size='mini' primary onClick={() => { clickAddHandler(plugin) }}>
                         <Icon name='add'></Icon>
                         add it
-                        </Button>
+                    </Button>
                 </GridColumn>
                 <GridColumn>
                     <Button secondary size='mini' primary onClick={() => { clickAddHandler(plugin) }}>

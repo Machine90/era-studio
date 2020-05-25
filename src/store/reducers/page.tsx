@@ -66,6 +66,11 @@ const handlers: AsuraHandler[] = [
         handler: (state: Map<string, PageElement>, action: AsuraAction) => {
             let { event } = action.payload;
             if (event && event.refresh) return new Map(state);
+            else if (event && event.screenDirection) {
+                const dir = event.screenDirection;
+                state.forEach((element: PageElement) => element.styles["screenDirection"] = dir);
+                return new Map(state);
+            }
             else return state;
         }
     },

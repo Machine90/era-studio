@@ -26,7 +26,7 @@ class EmulatorView extends Component<Props, States> {
     componentDidMount() { }
 
     componentDidUpdate() {
-        console.log("emulator update..");
+        
     }
 
     public render() {

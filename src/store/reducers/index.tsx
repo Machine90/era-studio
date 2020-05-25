@@ -97,6 +97,14 @@ export const refreshEvent = (): AsuraAction => ({
     }
 });
 
+export const changeScreenDirection = (direction: "horizontial" | "vertical"): AsuraAction => ({
+    type: "EVENT_REFRESH_PAGE",
+    payload: {
+        event: {
+            screenDirection: direction === 'vertical' ? 'vertical' : 'horizontial'
+        }
+    }
+});
 export default combineReducers({
     project, element, page, events
 });

@@ -18,6 +18,8 @@ import registerServiceWorker from './registerServiceWorker';
 import Test from './workshop/temp/test';
 import PreviewComponent from './workshop/simulator/PreviewComponent';
 
+import {PCHome} from './workshop/home'
+
 const initialState = (window as any).___INITIAL_STATE__;
 const store = createStore(initialState);
 
@@ -29,6 +31,7 @@ const routers = (): any => {
             <Route path="/test" component={Test} />
 
             <Route path="/pre-com" component={PreviewComponent} />
+            <Route path="/home" coomponent={PCHome} />
             
             <Redirect to="/ui-editor/studio" />
         </Switch>

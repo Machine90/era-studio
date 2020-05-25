@@ -3,13 +3,15 @@ import React, { Component, ReactNode } from "react";
 import { connect } from 'react-redux';
 import { autobind } from 'core-decorators';
 import { Payload } from '@/store/common/Types';
+import { changeScreenDirection } from '@/store/reducers/index';
 
 import EmulatorView from './Emulator';
 import { Menu, Icon, Select, Popup, List, Label, Button, Header, Dropdown, Transition } from 'semantic-ui-react';
 import './index.module.css';
-import { renderToString } from 'react-dom/server';
+
 interface Props {
     focusElementSeq?: string;
+    changeScreenDirection?: (direction: "horizontial" | "vertical") => void;
 }
 
 interface States {
@@ -17,9 +19,12 @@ interface States {
 }
 
 @connect(
-    (state: Payload, props) => ({
+    (state: Payload) => ({
         focusElementSeq: state.project?.selectedElement
-    })
+    }),
+    {
+        changeScreenDirection
+    }
 )
 @autobind
 class Preview extends Component<Props, States> {
@@ -34,7 +39,13 @@ class Preview extends Component<Props, States> {
     public zoomIn = () => { }
     public zoomOut = () => { }
 
+    /**
+     * 
+     * 
+     */
     private headerBar = () => {
+        const { changeScreenDirection } = this.props;
+
         const headerItems: any[] = [
             { title: 'Emulate', icon: 'video play', click: () => { console.log("emulate") } },
             { title: 'Publish', icon: 'paper plane', click: () => { } },
@@ -54,6 +65,7 @@ class Preview extends Component<Props, States> {
         const elements: any[] = [
             <Menu.Item key={-1}><img src='/favicon.ico' /></Menu.Item>
         ];
+        
         headerItems.forEach((element, index) => {
             elements.push(
                 <Menu.Item name={element.title} onClick={element.click} key={index}>
@@ -62,9 +74,11 @@ class Preview extends Component<Props, States> {
                 </Menu.Item>
             );
         });
+        // dropdown of "device"
         elements.push(
             <Menu.Item key={headerItems.length}><Select placeholder='Select Device' options={devices} /></Menu.Item>
         );
+        // dropdown of "screen", user can choose screen direction "vertical" or "horizon"
         elements.push(
             <Menu.Item key={headerItems.length + 1}>
                 <Header as='h6' inverted>
@@ -76,7 +90,11 @@ class Preview extends Component<Props, States> {
                             header="Screen"
                             options={align}
                             defaultValue={align[0].value}
-                            onChange={(evt, { value }) => { this.setState({ screen: value === "vertical" ? "vertical" : "horizontial" }) }}
+                            onChange={(evt, { value }) => { 
+                                const dir: "vertical" | "horizontial" = value === "vertical" ? "vertical" : "horizontial";
+                                this.setState({ screen: dir }); 
+                                if (changeScreenDirection) changeScreenDirection(dir);
+                            }}
                         />
                     </Header.Content>
                 </Header>

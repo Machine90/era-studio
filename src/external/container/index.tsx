@@ -21,6 +21,7 @@ const describe: Describe = {
 interface Style {
     background?: string;
     height?: string;
+    screenDirection?: "vertical" | "horithontial";
 }
 
 // =============================================
@@ -37,17 +38,15 @@ class ContainerPlugin extends React.Component {
         const styles: Style = this.props['styles'];
         if (!styles) return <div>empty</div>;
 
-        if (!styles.height) styles.height = '300px';
+        if (!styles.height) styles.height = (styles.screenDirection && styles.screenDirection === 'vertical') ? '300px' : '375px';
         const background = styles.background;
         const height = styles.height || '300px';
-
         const style: any = {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             border: "solid 1px #ddd",
             background: "#f0f0f0",
-            height: '300px',
         };
 
         if (background) {
@@ -59,7 +58,7 @@ class ContainerPlugin extends React.Component {
 
         const Child: any = this.props.children;
         return (
-            <div style={{ ...style, height: height }}>
+            <div style={{ ...style, height }}>
                 {Child}
             </div>
         );

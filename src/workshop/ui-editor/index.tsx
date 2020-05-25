@@ -33,13 +33,13 @@ interface States extends Payload {
     settingPanel: PanelKey;
 }
 
-class Screen {
+interface Screen {
     menu: any;
     content: any;
 }
 
 /**
- * The basic layout of editor contain
+ * The basic layout of editor which will be visited when user enter "/ui-editor/studio"
  * - Plugin box: choose plugins what you want.
  * - Preview: preview the effect of real-time Page.
  * - Dashboard: configure the arguments of component.
@@ -60,7 +60,11 @@ class Workshop extends Component<Props, States> {
         }
     }
 
-    componentDidMount() {
+    /**
+     * Register all default Plugins async when booting the studio.
+     * todo store these plugins to IndexedDB (need complete).
+     */
+    public componentDidMount() {
         const { activeMenu } = this.props['match'].params;
         if (activeMenu) {
             this.setState({ activeMenu });
@@ -76,10 +80,6 @@ class Workshop extends Component<Props, States> {
                 .registerPlugins(imports.default);
             this.setState({ initialized: true });
         }
-
-        // todo initial with default components.
-        // registerEmbeddedAddons("");
-
         import('@/external/index').then(registerEmbeddedAddons);
 
         // const testStore = async () => {
@@ -136,6 +136,13 @@ class Workshop extends Component<Props, States> {
         return pluginBar;
     }
 
+    /**
+     * Refresh url displayed at the broswer side, not really jump dest url.
+     * using state to control the page view.
+     * @param event
+     * @param name menu name connected to the page.
+     * @returns void
+     */
     private onChangeMenuSelection = (evt, { name }) => {
         this.setState({ activeMenu: name });
         const history = this.props['history'];
@@ -147,6 +154,9 @@ class Workshop extends Component<Props, States> {
      * 1. Studio
      * 2. Layer
      * 3. Settings
+     * Route the click event to specific page.
+     * @param
+     * @returns Screen
      */
     private dispatchMenuRender = (): Screen => {
         let menuContent: ReactNode;

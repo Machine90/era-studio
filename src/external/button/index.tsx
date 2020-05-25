@@ -6,6 +6,7 @@ interface Style {
     color?: string;
     background?: string;
     text?: string;
+    opacity?: string;
 }
 
 // =============================================
@@ -41,7 +42,7 @@ class ButtonPlugin extends React.Component {
             responsiveStyle["backgroundImage"] = `url(${styles.background})`;
         }
         return <div className='ui button primary'
-            style={{ ...responsiveStyle, position: 'absolute', overflowY: "auto" }}>
+            style={{ ...responsiveStyle, position: 'absolute', overflowY: "auto", opacity: styles.opacity }}>
             {styles.text}
         </div>
     }
@@ -74,10 +75,10 @@ class ButtonStyle extends StylesEditor {
                         placeholder="Button text"
                     />
                     <Label>Background</Label>
-                    <br/>
-                    <Input 
-                        label='http://' 
-                        placeholder='xxx.com/background.png' 
+                    <br />
+                    <Input
+                        label='http://'
+                        placeholder='xxx.com/background.png'
                         onChange={(e, d) => { styles.background = d.value }}
                         defaultValue={styles.background}
                     />
@@ -91,6 +92,12 @@ class ButtonStyle extends StylesEditor {
                         }} onChange={(e, d) => {
                             color = d.value
                         }} placeholder='red' />
+
+                    <Input
+                        placeholder='.5'
+                        onChange={(e, d) => { styles.opacity = d.value }}
+                        defaultValue={styles.opacity}
+                    />
 
                     <Form.Button onClick={() => { this.props.updateStyles({ ...styles }) }}>Submit</Form.Button>
                 </Form>
