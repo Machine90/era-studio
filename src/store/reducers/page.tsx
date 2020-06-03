@@ -64,16 +64,30 @@ const handlers: AsuraHandler[] = [
     {
         type: "EVENT_REFRESH_PAGE",
         handler: (state: Map<string, PageElement>, action: AsuraAction) => {
-            let { event } = action.payload;
-            if (event && event.refresh) return new Map(state);
-            else if (event && event.screenDirection) {
-                const dir = event.screenDirection;
+            let { events } = action.payload;
+            if (events && events.refresh) return new Map(state);
+            else if (events && events.screenDirection) {
+                const dir = events.screenDirection;
                 state.forEach((element: PageElement) => element.styles["screenDirection"] = dir);
                 return new Map(state);
             }
             else return state;
         }
     },
+    // {
+    //     type: "CHANGE_LANG",
+    //     handler: (state: Map<string, PageElement>, action: AsuraAction) => {
+    //         let { event } = action.payload;
+            
+    //         if (event && event.lang) {
+    //             const lang = event.lang;
+    //             console.log("change lang... ", lang);
+    //             state.forEach((element: PageElement) => element.styles["lang"] = lang);
+    //             return new Map(state);
+    //         }
+    //         else return state;
+    //     }
+    // }
 ];
 
 const ACTION_HANDLERS: object = processAsuraHandlers(handlers);

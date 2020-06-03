@@ -31,9 +31,10 @@ const routers = (): any => {
             <Route path="/test" component={Test} />
 
             <Route path="/pre-com" component={PreviewComponent} />
-            <Route path="/home" coomponent={PCHome} />
+            <Route path="/home" component={PCHome} />
             
-            <Redirect to="/ui-editor/studio" />
+            {/* <Redirect to="/ui-editor/studio" /> */}
+            <Redirect to="/home" />
         </Switch>
     </BrowserRouter>;
     return routers;

@@ -6,7 +6,7 @@ import { Payload } from '@/store/common/Types';
 import { changeScreenDirection } from '@/store/reducers/index';
 
 import EmulatorView from './Emulator';
-import { Menu, Icon, Select, Popup, List, Label, Button, Header, Dropdown, Transition } from 'semantic-ui-react';
+import { Menu, Icon, Select, Popup, List, Label, Button, Header, Dropdown, Transition, Flag } from 'semantic-ui-react';
 import './index.module.css';
 
 interface Props {
@@ -65,7 +65,7 @@ class Preview extends Component<Props, States> {
         const elements: any[] = [
             <Menu.Item key={-1}><img src='/favicon.ico' /></Menu.Item>
         ];
-        
+
         headerItems.forEach((element, index) => {
             elements.push(
                 <Menu.Item name={element.title} onClick={element.click} key={index}>
@@ -74,13 +74,15 @@ class Preview extends Component<Props, States> {
                 </Menu.Item>
             );
         });
+
+        let headerCount: number = headerItems.length;
         // dropdown of "device"
         elements.push(
-            <Menu.Item key={headerItems.length}><Select placeholder='Select Device' options={devices} /></Menu.Item>
+            <Menu.Item key={headerCount++}><Select placeholder='Select Device' options={devices} /></Menu.Item>
         );
         // dropdown of "screen", user can choose screen direction "vertical" or "horizon"
         elements.push(
-            <Menu.Item key={headerItems.length + 1}>
+            <Menu.Item key={headerCount++}>
                 <Header as='h6' inverted>
                     <Icon name='repeat' />
                     <Header.Content>
@@ -90,13 +92,21 @@ class Preview extends Component<Props, States> {
                             header="Screen"
                             options={align}
                             defaultValue={align[0].value}
-                            onChange={(evt, { value }) => { 
+                            onChange={(evt, { value }) => {
                                 const dir: "vertical" | "horizontial" = value === "vertical" ? "vertical" : "horizontial";
-                                this.setState({ screen: dir }); 
+                                this.setState({ screen: dir });
                                 if (changeScreenDirection) changeScreenDirection(dir);
                             }}
                         />
                     </Header.Content>
+                </Header>
+            </Menu.Item>
+        );
+
+        elements.push(
+            <Menu.Item key={headerCount++}>
+                <Header>
+                    <Flag name='us' />
                 </Header>
             </Menu.Item>
         );

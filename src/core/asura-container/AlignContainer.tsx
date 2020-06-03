@@ -39,7 +39,7 @@ interface States {
 @connect(
     (state: Payload) => ({
         focusElementSeq: state.project?.selectedElement,
-        event: state.event
+        events: state.events
     }),
     {
         selectElement,

@@ -6,6 +6,7 @@ import page, { PageElement } from './page';
 import events from './events';
 
 import { EventType, Payload, AsuraAction } from '../common/Types';
+import { Lang } from '@/common/components/I18nSelector';
 
 
 /***
@@ -91,7 +92,7 @@ export const removeElement = (selectedElementSeq: string): AsuraAction => ({
 export const refreshEvent = (): AsuraAction => ({
     type: "EVENT_REFRESH_PAGE",
     payload: {
-        event: {
+        events: {
             refresh: true
         }
     }
@@ -100,11 +101,19 @@ export const refreshEvent = (): AsuraAction => ({
 export const changeScreenDirection = (direction: "horizontial" | "vertical"): AsuraAction => ({
     type: "EVENT_REFRESH_PAGE",
     payload: {
-        event: {
+        events: {
             screenDirection: direction === 'vertical' ? 'vertical' : 'horizontial'
         }
     }
 });
+
+export const changeLang = (lang: Lang): AsuraAction => ({
+    type: "CHANGE_LANG",
+    payload: {
+        events: { lang: lang }
+    }
+});
+
 export default combineReducers({
     project, element, page, events
 });

@@ -1,10 +1,12 @@
 import { Project, PluginElement } from '@/common/models/Project';
 import { Action } from 'redux';
 import { PageElement } from '../reducers/page';
+import { Lang } from '@/common/components/I18nSelector';
 
 export class Event {
     public refresh?: boolean = false;
     public screenDirection?: "vertical" | "horizontial";
+    public lang?: Lang = "zh-CN";
 }
 
 export class Payload {
@@ -14,7 +16,7 @@ export class Payload {
     public focusPlugin?: PluginElement;
     public focusPluginParent?: PageElement;
     public focusElementSeq?: string;
-    public event?: Event;
+    public events?: Event;
 }
 
 export type EventType = 
@@ -22,7 +24,8 @@ export type EventType =
 "UPDATE_PROJECT_CONFIG" |  // project events
 "APPEND_ELEMENT" |  // plugin events
 "SELECT_ELEMENT" | "REMOVE_ELEMENT" |
-"EVENT_REFRESH_PAGE"; // page template events
+"EVENT_REFRESH_PAGE" |  // page template events
+"CHANGE_LANG"; // change language
 
 export interface AsuraAction extends Action {
     type: EventType;
