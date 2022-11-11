@@ -54,7 +54,6 @@ class RndComponent extends Component<Props, States> {
     componentDidMount() {
         const { styles } = this.props;
         let x, y;
-        console.log("......style: ", styles);
         if(styles) {
             x = styles['x'] || 0;
             y = styles['y'] || 0;
